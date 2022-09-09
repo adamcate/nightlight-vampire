@@ -36,8 +36,8 @@ filesystem/tiles.sprite: MKSPRITE_FLAGS=--format CI4 --tiles 32,32
 $(BUILD_DIR)/nightlight_vampire.dfs: $(assets_conv)
 $(BUILD_DIR)/nightlight_vampire.elf: $(src:%.c=$(BUILD_DIR)/%.o)
 
-rdpqdemo.z64: N64_ROM_TITLE="RSPQ Demo"
-rdpqdemo.z64: $(BUILD_DIR)/nightlight_vampire.dfs 
+nightlight_vampire.z64: N64_ROM_TITLE="nightlight_vampire"
+nightlight_vampire.z64: $(BUILD_DIR)/nightlight_vampire.dfs
 
 clean:
 	rm -rf $(BUILD_DIR) nightlight_vampire.z64
