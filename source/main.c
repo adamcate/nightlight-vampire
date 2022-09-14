@@ -1,4 +1,5 @@
 #include "libdragon.h"
+#include "assets.h"
 #include <malloc.h>
 
 
@@ -6,11 +7,9 @@ static xm64player_t xm;
 
 static sprite_t *tiles_sprite;
 
-// static rspq_block_t *tiles_block;
 surface_t tiles_surf;
 
 static uint32_t bk_x = 0;
-// static uint32_t bk_y = 0;
 
 static struct controller_data c_keys;
 
@@ -41,7 +40,7 @@ void render()
 
     for (uint32_t ty = 0; ty < 240; ty += tile_height)
     {
-        for (int32_t tx = -8; tx < 320; tx += tile_width)
+        for (int32_t tx = 0; tx < 320; tx += tile_width)
         {
             
             rdpq_texture_rectangle(TILE0, tx, ty, tx+16, ty+16, s, t, 1, 1);

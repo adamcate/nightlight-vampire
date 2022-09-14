@@ -30,8 +30,7 @@ filesystem/%.sprite: assets/%.png
 	@echo "    [SPRITE] $@"
 	@$(N64_MKSPRITE) $(MKSPRITE_FLAGS) -o filesystem "$<"
 
-filesystem/n64brew.sprite: MKSPRITE_FLAGS=--format RGBA16 --tiles 32,32
-filesystem/tiles.sprite: MKSPRITE_FLAGS=--format CI4 --tiles 32,32
+filesystem/tiles.sprite: MKSPRITE_FLAGS=--format CI4 --tiles 16,16
 
 $(BUILD_DIR)/nightlight_vampire.dfs: $(assets_conv)
 $(BUILD_DIR)/nightlight_vampire.elf: $(src:%.c=$(BUILD_DIR)/%.o)

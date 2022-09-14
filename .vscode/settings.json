@@ -1,5 +1,5 @@
 {
     "files.associations": {
-        "malloc.h": "c"
+        "*.h": "c"
     }
 }
