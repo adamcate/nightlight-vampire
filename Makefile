@@ -15,22 +15,22 @@ MKSPRITE_FLAGS ?=
 
 all: nightlight_vampire.z64
 
-filesystem/%.xm64: assets/%.xm
-	@mkdir -p $(dir $@)
-	@echo "    [AUDIO] $@"
-	@$(N64_AUDIOCONV) $(AUDIOCONV_FLAGS) -o filesystem $<
+# filesystem/%.xm64: assets/%.xm
+#	@mkdir -p $(dir $@)
+#	@echo "    [AUDIO] $@"
+#	@$(N64_AUDIOCONV) $(AUDIOCONV_FLAGS) -o filesystem $<
 
-filesystem/%.wav64: assets/%.wav
-	@mkdir -p $(dir $@)
-	@echo "    [AUDIO] $@"
-	@$(N64_AUDIOCONV) -o filesystem $<
+#filesystem/%.wav64: assets/%.wav
+#	@mkdir -p $(dir $@)
+#	@echo "    [AUDIO] $@"
+#	@$(N64_AUDIOCONV) -o filesystem $<
 
-filesystem/%.sprite: assets/%.png
-	@mkdir -p $(dir $@)
-	@echo "    [SPRITE] $@"
-	@$(N64_MKSPRITE) $(MKSPRITE_FLAGS) -o filesystem "$<"
+# filesystem/%.sprite: assets/%.png
+#	@mkdir -p $(dir $@)
+#	@echo "    [SPRITE] $@"
+#	@$(N64_MKSPRITE) $(MKSPRITE_FLAGS) -o filesystem "$<"
 
-filesystem/tiles.sprite: MKSPRITE_FLAGS=--format CI4 --tiles 16,16
+# filesystem/tiles.sprite: MKSPRITE_FLAGS=--format CI4 --tiles 16,16
 
 $(BUILD_DIR)/nightlight_vampire.dfs: $(assets_conv)
 $(BUILD_DIR)/nightlight_vampire.elf: $(src:%.c=$(BUILD_DIR)/%.o)
