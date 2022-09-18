@@ -26,18 +26,18 @@ extern wav64_t sound_effect;
 // names for the bk sprites sprites in the filesystem
 const char bk_tileset_names[BK_TILE_PAGES][MAX_FILE_CHAR_LEN] = 
 {
-    "rom:/tiles.sprite",
-    " ",
-    " "
+    "rom:/tiles_1.sprite",
+    "rom:/tiles_2.sprite",
+    "rom:/tiles_3.sprite"
 };
 
 // names for the entity sprites in the filesystem
 const char entity_tileset_names[ENTITY_PAGES][MAX_FILE_CHAR_LEN] = 
 {
-    "rom:/tiles.sprite",
-    " ",
-    " ",
-    " "
+    "rom:/characters_1.sprite",
+    "rom:/characters_2.sprite",
+    "rom:/characters_3.sprite",
+    "rom:/characters_4.sprite"
 };
 
 // names for the music tracks in the filesystem
