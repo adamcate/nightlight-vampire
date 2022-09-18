@@ -12,6 +12,7 @@
 
 // pointers to the sprites for all bk tiles
 extern sprite_t* bk_tileset[BK_TILE_PAGES];
+extern surface_t surface_bk_tile_page;
 
 // pointers to the sprites for all entity tiles
 extern sprite_t* entity_tileset[ENTITY_PAGES];

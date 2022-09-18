@@ -22,4 +22,8 @@ int main()
     rdpq_debug_start();
 
     rdpq_mode_antialias(false);
+
+    while(1){
+        render();
+    }
 }
