@@ -2,12 +2,14 @@
 #define ASSETS_H
 
 
-#define BK_TILE_PAGES   3
+#define BK_TILE_PAGES   4
 #define ENTITY_PAGES    4
 #define MUSIC_TRACKS    5
 #define SFX_FILES       5
 
-#define MAX_FILE_CHAR_LEN 10
+#define MAX_FILE_CHAR_LEN 30
+
+#include "libdragon.h"
 
 
 // pointers to the sprites for all bk tiles
@@ -29,7 +31,8 @@ const char bk_tileset_names[BK_TILE_PAGES][MAX_FILE_CHAR_LEN] =
 {
     "rom:/tiles_1.sprite",
     "rom:/tiles_2.sprite",
-    "rom:/tiles_3.sprite"
+    "rom:/tiles_3.sprite",
+    "rom:/tiles_4.sprite"
 };
 
 // names for the entity sprites in the filesystem
