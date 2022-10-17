@@ -4,9 +4,10 @@
 #include <stdint.h>
 
 
-#define LEVEL_WIDTH  20
-#define LEVEL_HEIGHT 15
-#define NUM_LEVELS   10
+#define LEVEL_WIDTH  4
+#define LEVEL_HEIGHT 4
+#define NUM_LEVELS   2
+#define NUM_TILES    2
 
 typedef struct{
     uint8_t tile_page       : 4;
@@ -17,12 +18,12 @@ typedef struct{
 }level_tile_t;
 
 typedef struct{
-    level_tile_t tiles[LEVEL_WIDTH][LEVEL_HEIGHT];
     char* name;
+    level_tile_t tiles[LEVEL_WIDTH*LEVEL_HEIGHT];
     int trackno;
 }level_t;
 
-
+extern level_tile_t tile_types[NUM_TILES];
 extern level_t* current_level;
 extern level_t level_list[NUM_LEVELS];
 
