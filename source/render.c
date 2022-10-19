@@ -2,6 +2,7 @@
 
 surface_t* display;
 surface_t bk_surf;
+surface_t block_surf;
 
 static color_t bk_color = {
     .r = 0,

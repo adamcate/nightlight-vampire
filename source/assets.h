@@ -12,7 +12,7 @@ extern sprite_t* title_background;
 extern surface_t block_surf;
 extern surface_t player_surf;
 
-extern xm64player_t xm;
-extern wav64_t wav;
+// extern xm64player_t xm;
+// extern wav64_t wav;
 
 #endif

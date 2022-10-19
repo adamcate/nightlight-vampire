@@ -25,16 +25,16 @@ typedef struct{
 }game_tile_t;
 
 
-extern int score;
-extern int level_no;
+extern uint16_t score;
+extern uint16_t level_no;
 
 extern game_state_t state;
 
 extern uint32_t player_x;
 extern uint32_t player_y;
 
-extern uint32_t cell_x;
-extern uint32_t cell_y;
+extern uint8_t cell_x;
+extern uint8_t cell_y;
 
 extern uint8_t lives;
 
