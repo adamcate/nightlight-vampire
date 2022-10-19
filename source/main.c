@@ -19,6 +19,8 @@ uint8_t cell_y = 0;
 
 uint8_t lives = starting_lives;
 
+game_state_t state = STATE_MENU;
+
 void game_tick(){
     if(render() == -1) return;
 
@@ -44,9 +46,10 @@ int main()
     {
         title_background = sprite_load("rom:/title_background.sprite");
 
+        bk_surf = sprite_get_pixels(title_background);
+
         while(state == STATE_MENU)
         {
-
             render();
             update_audio();
         }
@@ -56,6 +59,9 @@ int main()
         block_sprite = sprite_load("rom:/block.sprite");
         block_palette = sprite_load("rom:/block_palette.sprite");
         player_sprite = sprite_load("rom:/player_sprite.sprite");
+
+        block_surf = sprite_get_pixels(block_sprite);
+        player_surf = sprite_get_pixels(player_sprite);
 
         while(state != STATE_GAMEOVER)
         {
