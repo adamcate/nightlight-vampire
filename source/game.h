@@ -8,6 +8,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+void update_audio();
+void game_tick();
 
 typedef enum{
     STATE_MENU = 0,
@@ -33,5 +35,7 @@ extern uint32_t player_y;
 
 extern uint32_t cell_x;
 extern uint32_t cell_y;
+
+extern uint8_t lives;
 
 #endif
