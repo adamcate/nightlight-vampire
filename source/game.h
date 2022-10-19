@@ -38,4 +38,7 @@ extern uint8_t cell_y;
 
 extern uint8_t lives;
 
+extern surface_t* display;
+extern surface_t bk_surf;
+
 #endif
