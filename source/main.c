@@ -2,14 +2,11 @@
 #include <malloc.h>
 
 #include "libdragon.h"
+#include "globals.h"
+#include "render.h"
 
-#include "game.h"
 
-
-const uint8_t starting_lives = 3;
-
-uint16_t score = 0;
-uint16_t level_no = 1;
+game_state_t game_state = STATE_GAME;
 
 uint32_t player_x = 0;
 uint32_t player_y = 0;
@@ -17,17 +14,17 @@ uint32_t player_y = 0;
 uint8_t cell_x = 0;
 uint8_t cell_y = 0;
 
-uint8_t lives = starting_lives;
 
-game_state_t state = STATE_MENU;
+sprite_t* block_sprite;
+sprite_t* block_palette;
 
-void game_tick(){
-    if(render() == -1) return;
+surface_t block_surf;
+// surface_t block_palette_surf;
 
-    controller_scan();
-    struct controller_data ckeys = get_keys_down();
-    get_input(&ckeys);
-}
+sprite_t* player_sprite;
+
+surface_t player_surf;
+
 
 int main()
 {
@@ -37,6 +34,7 @@ int main()
 
 
     audio_init(41000,2);
+    mixer_init(32);
     controller_init();
 
     rdp_init();
@@ -44,17 +42,6 @@ int main()
 
     while(1)
     {
-        title_background = sprite_load("rom:/title_background.sprite");
-
-        bk_surf = sprite_get_pixels(title_background);
-
-        while(state == STATE_MENU)
-        {
-            render();
-            update_audio();
-        }
-
-        sprite_free(title_background);
 
         block_sprite = sprite_load("rom:/block.sprite");
         block_palette = sprite_load("rom:/block_palette.sprite");
@@ -63,11 +50,10 @@ int main()
         block_surf = sprite_get_pixels(block_sprite);
         player_surf = sprite_get_pixels(player_sprite);
 
-        while(state != STATE_GAMEOVER)
-        {
-            game_tick();
 
-            update_audio();
+        while(game_state == STATE_GAME)
+        {
+            render_game();
         }
 
         sprite_free(block_sprite);
