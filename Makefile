@@ -1,7 +1,7 @@
 BUILD_DIR=build
 include $(N64_INST)/include/n64.mk
 
-src = source/main.c
+src = $(wildcard source/*.c)
 assets_xm = $(wildcard assets/*.xm)
 assets_wav = $(wildcard assets/*.wav)
 assets_png = $(wildcard assets/*.png)
@@ -30,11 +30,9 @@ filesystem/%.sprite: assets/%.png
 	@echo "    [SPRITE] $@"
 	@$(N64_MKSPRITE) $(MKSPRITE_FLAGS) -o filesystem "$<"
 
-#filesystem/n64brew.sprite: MKSPRITE_FLAGS=--format RGBA16 --tiles 32,32
-filesystem/tiles.sprite: MKSPRITE_FLAGS=--format CI4 --tiles 32,32
-filesystem/bk_tiles_1.sprite: MKSPRITE_FLAGS=--format CI4 --tiles 16,16
-filesystem/p2.sprite: MKSPRITE_FLAGS=--format CI8
-filesystem/fanger.sprite: MKSPRITE_FLAGS=--format CI4
+filesystem/player_sprite.sprite: MKSPRITE_FLAGS=--format CI4
+filesystem/block.sprite: MKSPRITE_FLAGS=--format CI4
+filesystem/block_palette.sprite: MKSPRITE_FLAGS=--format CI8
 
 $(BUILD_DIR)/nightlight_vampire.dfs: $(assets_conv)
 $(BUILD_DIR)/nightlight_vampire.elf: $(src:%.c=$(BUILD_DIR)/%.o)
