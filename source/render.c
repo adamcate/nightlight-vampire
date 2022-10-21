@@ -28,7 +28,9 @@ void render_game(){
     rdpq_tex_load_tlut(sprite_get_palette(block_palette), 0, 256);
 
     rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, 0, 0, 0, 32, 32);
-    rdpq_texture_rectangle(TILE0,0,0,32,32,0,0,1,1);
+    for(int i = 0; i < 9; i++){
+        rdpq_texture_rectangle(TILE0,i,0,i+32*i,32,0,0,1,1);
+    }
 
 
     rdpq_mode_tlut(TLUT_NONE);
