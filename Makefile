@@ -33,7 +33,7 @@ filesystem/%.sprite: assets/%.png
 filesystem/player_sprite.sprite: MKSPRITE_FLAGS=--format CI4
 filesystem/block.sprite: MKSPRITE_FLAGS=--format CI4
 filesystem/block_palette.sprite: MKSPRITE_FLAGS=--format CI8
-filesystem/playerfield_background.sprite: MKSPRITE_FLAGS=--format RGBA16
+filesystem/playfield_background.sprite: MKSPRITE_FLAGS=--format RGBA16
 
 $(BUILD_DIR)/nightlight_vampire.dfs: $(assets_conv)
 $(BUILD_DIR)/nightlight_vampire.elf: $(src:%.c=$(BUILD_DIR)/%.o)
