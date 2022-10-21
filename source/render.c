@@ -6,6 +6,9 @@
 static uint32_t offset_x = 48;
 static const uint32_t offset_y = 200;
 
+static int frame_counter = 0;
+static int palette_counter = 0;
+
 static volatile color_t bk_color = {
     .r = 0,
     .b = 0,
@@ -33,7 +36,7 @@ void render_playfield(){
     rdpq_mode_tlut(TLUT_RGBA16);
     rdpq_tex_load_tlut(sprite_get_palette(block_palette), 0, 256);
 
-    rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, 0, 0, 0, 32, 32);
+    rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, palette_counter, 0, 0, 32, 32);
 
     int offset_row = 0;
 
@@ -55,6 +58,13 @@ void render_playfield(){
 void render_game(){
     surface_t* disp = display_lock();
     if(!disp) return;
+
+    frame_counter++;
+    frame_counter %= 4;
+
+    if(frame_counter == 0) palette_counter++;
+    if(palette_counter > 6) palette_counter = 0;
+
 
     rdp_attach(disp);
 
