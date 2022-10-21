@@ -45,4 +45,6 @@ extern surface_t block_surf;
 extern sprite_t* player_sprite;
 extern surface_t player_surf;
 
+extern sprite_t* playfield_background;
+
 #endif

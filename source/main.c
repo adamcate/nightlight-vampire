@@ -25,6 +25,8 @@ sprite_t* player_sprite;
 
 surface_t player_surf;
 
+sprite_t* playfield_background;
+
 
 int main()
 {
@@ -46,6 +48,7 @@ int main()
         block_sprite = sprite_load("rom:/block.sprite");
         block_palette = sprite_load("rom:/block_palette.sprite");
         player_sprite = sprite_load("rom:/player_sprite.sprite");
+        playfield_background = sprite_load("rom:/playfield_background.sprite");
 
         block_surf = sprite_get_pixels(block_sprite);
         player_surf = sprite_get_pixels(player_sprite);
