@@ -27,24 +27,31 @@ typedef struct
 
 }game_block;
 
+extern game_block gamefield[7][7];
 
 extern game_state_t game_state;
+
 extern uint32_t player_x;
 extern uint32_t player_y;
 
 extern uint8_t cell_x;
 extern uint8_t cell_y;
 
+extern uint32_t score;
+
 
 extern sprite_t* block_sprite;
 extern sprite_t* block_palette;
 
 extern surface_t block_surf;
-// extern surface_t block_palette_surf;
+
 
 extern sprite_t* player_sprite;
 extern surface_t player_surf;
 
 extern sprite_t* playfield_background;
+
+extern sprite_t* scoreboard;
+extern surface_t scoreboard_surf;
 
 #endif
