@@ -2,6 +2,8 @@
 #include "globals.h"
 
 #include "libdragon.h"
+#include <malloc.h>
+
 
 static uint32_t offset_x = 48;
 static const uint32_t offset_y = 200;
@@ -20,6 +22,7 @@ void render_background(){
     surface_t bk_surf = sprite_get_pixels(playfield_background);
 
     rdpq_set_mode_copy(true);
+    rdpq_mode_tlut(TLUT_NONE);
     
     for(int x = 0; x <= 280; x+=40){
         for(int y = 0; y <= 200; y+=40){
@@ -27,6 +30,13 @@ void render_background(){
             rdpq_texture_rectangle(TILE0,x,y,x+40,y+40,x,y,1,1);
         }
     }
+
+    rdpq_tex_load_sub_ci4(TILE0,&scoreboard_surf,0,0,0,0,128,64);
+    rdpq_texture_rectangle(TILE0,0,0,128,64,0,0,1,1);
+    /*rdpq_tex_load_sub_ci4(TILE0,&scoreboard_surf,0,0,64,0,128,64);
+    rdpq_texture_rectangle(TILE0,64,0,128,64,64,0,1,1);*/
+
+
 }
 
 void render_playfield(){
@@ -57,6 +67,7 @@ void render_playfield(){
 
 void render_game(){
     surface_t* disp = display_lock();
+
     if(!disp) return;
 
     frame_counter++;
@@ -72,5 +83,8 @@ void render_game(){
 
     render_playfield();
 
+    
+    
     rdp_detach_show(disp);
+
 }

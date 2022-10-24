@@ -14,18 +14,22 @@ uint32_t player_y = 0;
 uint8_t cell_x = 0;
 uint8_t cell_y = 0;
 
+uint32_t score = 20;
+
 
 sprite_t* block_sprite;
 sprite_t* block_palette;
 
 surface_t block_surf;
-// surface_t block_palette_surf;
 
 sprite_t* player_sprite;
 
 surface_t player_surf;
 
 sprite_t* playfield_background;
+
+sprite_t* scoreboard;
+surface_t scoreboard_surf;
 
 
 int main()
@@ -49,9 +53,11 @@ int main()
         block_palette = sprite_load("rom:/block_palette.sprite");
         player_sprite = sprite_load("rom:/player_sprite.sprite");
         playfield_background = sprite_load("rom:/playfield_background.sprite");
+        scoreboard = sprite_load("rom:/scoreboard.sprite");
 
         block_surf = sprite_get_pixels(block_sprite);
         player_surf = sprite_get_pixels(player_sprite);
+        scoreboard_surf = sprite_get_pixels(scoreboard);
 
 
         while(game_state == STATE_GAME)
