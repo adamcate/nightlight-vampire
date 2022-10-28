@@ -4,15 +4,19 @@
 #include "libdragon.h"
 #include "globals.h"
 #include "render.h"
+#include "game.h"
 
 
 game_state_t game_state = STATE_GAME;
 
-uint32_t player_x = 0;
-uint32_t player_y = 0;
+uint32_t player_x = 40;
+uint32_t player_y = 40;
 
-uint8_t cell_x = 0;
-uint8_t cell_y = 0;
+const int cell_x_init = 0;
+const int cell_y_init = 0;
+
+int cell_x = cell_x_init;
+int cell_y = cell_y_init;
 
 uint32_t score = 20;
 
@@ -31,6 +35,7 @@ sprite_t* playfield_background;
 sprite_t* scoreboard;
 surface_t scoreboard_surf;
 
+bool dir_held[4] = {false, false, false, false};
 
 int main()
 {
@@ -59,7 +64,8 @@ int main()
         player_surf = sprite_get_pixels(player_sprite);
         scoreboard_surf = sprite_get_pixels(scoreboard);
 
-
+        init_gamefield();
+        
         while(game_state == STATE_GAME)
         {
             render_game();
