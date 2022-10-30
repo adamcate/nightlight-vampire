@@ -28,6 +28,7 @@ typedef struct
 
 }game_block;
 
+void render_background();
 extern game_block gamefield[7][7];
 
 extern const game_block block_empty;
