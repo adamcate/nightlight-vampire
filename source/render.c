@@ -6,9 +6,8 @@
 #include <malloc.h>
 
 
-static uint32_t offset_x = 48;
-static const uint32_t offset_y = 200;
-
+const int playfield_x = 48;
+const int playfield_y = 200;
 static int frame_counter = 0;
 static int palette_counter = 0;
 
@@ -62,8 +61,6 @@ void render_playfield(){
 
     rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, palette_counter, 0, 0, 32, 32);
 
-    int offset_row = 0;
-
     for(int i = 0; i < 7; ++i)
     {
 
@@ -74,20 +71,17 @@ void render_playfield(){
 
             rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, palette, 0, 0, 32, 32);
             
-            for(int j = 0; j < 7 - offset_row; ++j)
+            for(int j = 0; j < 7 - i; ++j)
             {
-                if(true /*gamefield[grid_y][grid_x].col_index == palette && gamefield[grid_y][grid_x].is_occupied*/)
+                if(gamefield[grid_x][grid_y].col_index == palette)
                 {
-                    rdpq_texture_rectangle(TILE0,32*i+offset_x,offset_y-24*j,32+32*i+offset_x,32+offset_y-24*j,0,0,1,1);
+                    rdpq_texture_rectangle(TILE0,playfield_x + 32*j+16*i,playfield_y-24*i,playfield_x + 32+32*j+16*i,32+playfield_y-24*i,0,0,1,1);
                 }
                 grid_x++;
                 grid_y--;
 
-                offset_x += 16;
             }
-            offset_x = 48;
         }
-        ++offset_row;
     }
 
 
@@ -117,6 +111,8 @@ void render_game(){
 
     render_player();
     
+    
     rdp_detach_show(disp);
-
+    // for(int i = 0; i < cell_x; ++i) graphics_draw_text(disp, i * 5 + 15, 15, "*");
+    // for(int i = 0; i < cell_y; ++i) graphics_draw_text(disp, i * 5 + 15, 30, "*");
 }

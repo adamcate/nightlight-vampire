@@ -47,8 +47,17 @@ void get_controller_inputs(bool* outputs)
     if(cell_x < 0) cell_x = 0;
     if(cell_y < 0) cell_y = 0;
 
-    gamefield[cell_y][cell_x].col_index = 1;
-    
     player_y = (cell_x + cell_y) * 24 + 32;
     player_x = (cell_x - cell_y)*16 + 144;
+
+    bool getInput = false;
+    for(int i = 0; i < 4; ++i){
+        if(dir_held[i]){
+            getInput = true;
+            break;
+        }
+    }
+    if(!getInput) return;
+    gamefield[cell_x][cell_y].col_index += 1;
+    gamefield[cell_x][cell_y].col_index %= 5;
 }
