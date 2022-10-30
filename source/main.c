@@ -35,6 +35,8 @@ sprite_t* playfield_background;
 sprite_t* scoreboard;
 surface_t scoreboard_surf;
 
+static xm64player_t xm;
+
 bool dir_held[4] = {false, false, false, false};
 
 int main()
@@ -64,11 +66,20 @@ int main()
         player_surf = sprite_get_pixels(player_sprite);
         scoreboard_surf = sprite_get_pixels(scoreboard);
 
+        xm64player_open(&xm, "rom:/3_OldLonely.xm64");
+        xm64player_play(&xm, 0);
+
         init_gamefield();
         
         while(game_state == STATE_GAME)
         {
             render_game();
+
+            if (audio_can_write()) {    	
+            short *buf = audio_write_begin();
+            mixer_poll(buf, audio_get_buffer_length());
+            audio_write_end();
+        }
         }
 
         sprite_free(block_sprite);

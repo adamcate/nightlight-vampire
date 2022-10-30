@@ -58,6 +58,9 @@ void get_controller_inputs(bool* outputs)
         }
     }
     if(!getInput) return;
+
     gamefield[cell_x][cell_y].col_index += 1;
     gamefield[cell_x][cell_y].col_index %= 5;
+
+    if(dpad_down.c[0].A){gamefield[cell_x][cell_y].is_lit = true;}
 }
