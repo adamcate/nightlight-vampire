@@ -69,9 +69,9 @@ void get_controller_inputs(bool* outputs)
         }
     }
     
-    if(dpad_down.c[0].A){
+    /*if(dpad_down.c[0].A){
         gamefield[cell_x][cell_y].is_lit = true;
-    }
+    }*/
 
     if(!getInput) return;
 

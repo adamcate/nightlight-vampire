@@ -205,7 +205,7 @@ int main()
 
                     surface_t go_surf = sprite_get_pixels(gameover_sprite);
                     rdpq_tex_load_sub(TILE0,&go_surf,0,0,0,128,16);
-                    rdpq_texture_rectangle(TILE0,96,112,96+128,112+16,0,0,1,1);
+                    rdpq_texture_rectangle(TILE0,32,56,32+256,56+32,0,0,0.5,0.5);
 
                     rdp_detach_show(disp);
                     gameovertimer++;
