@@ -3,7 +3,7 @@
 This is the repository for the 2022 N64Brew Game Jam entry 
 
 The light burns! Avoid it with the D-PAD. You can change the color of an edge piece without moving!
-
+You will need to use the Ares emulator or an N64 flashcart to run this rom.
 
 Credits:
 
