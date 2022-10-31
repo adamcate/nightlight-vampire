@@ -13,7 +13,7 @@ assets_conv = $(addprefix filesystem/,$(notdir $(assets_xm:%.xm=%.xm64))) \
 AUDIOCONV_FLAGS ?=
 MKSPRITE_FLAGS ?=
 
-all: nightlight_vampire.z64
+all: fangers_lightmare.z64
 
 filesystem/%.xm64: assets/%.xm
 	@mkdir -p $(dir $@)
@@ -36,16 +36,17 @@ filesystem/block_palette.sprite: MKSPRITE_FLAGS=--format CI8
 filesystem/playfield_background.sprite: MKSPRITE_FLAGS=--format RGBA16
 filesystem/scoreboard.sprite: MKSPRITE_FLAGS=--format RGBA16
 filesystem/TITLE.sprite: MKSPRITE_FLAGS=--format RGBA16
+filesystem/game_over.sprite: MKSPRITE_FLAGS=--format RGBA16
 
 
-$(BUILD_DIR)/nightlight_vampire.dfs: $(assets_conv)
-$(BUILD_DIR)/nightlight_vampire.elf: $(src:%.c=$(BUILD_DIR)/%.o)
+$(BUILD_DIR)/fangers_lightmare.dfs: $(assets_conv)
+$(BUILD_DIR)/fangers_lightmare.elf: $(src:%.c=$(BUILD_DIR)/%.o)
 
-nightlight_vampire.z64: N64_ROM_TITLE="Nightlight Vampire"
-nightlight_vampire.z64: $(BUILD_DIR)/nightlight_vampire.dfs 
+fangers_lightmare.z64: N64_ROM_TITLE="Fanger's Lightmare!"
+fangers_lightmare.z64: $(BUILD_DIR)/fangers_lightmare.dfs 
 
 clean:
-	rm -rf $(BUILD_DIR) nightlight_vampire.z64
+	rm -rf $(BUILD_DIR) fangers_lightmare.z64
 
 -include $(wildcard $(BUILD_DIR)/*.d)
 

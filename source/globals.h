@@ -6,6 +6,14 @@
 
 #include "libdragon.h"
 
+#define SECONDS_TO_FRAMES(seconds) seconds * 60
+
+extern const uint32_t init_timer_val;
+extern uint32_t frame_timer;
+extern uint32_t curr_diff_timer;
+
+extern bool flashing_state;
+extern int f_stage;
 
 typedef enum
 {

@@ -6,8 +6,11 @@
 #include "render.h"
 #include "game.h"
 
+int f_stage = 0;
 
 game_state_t game_state = STATE_MENU;
+
+bool flashing_state = false;
 
 uint32_t player_x = 40;
 uint32_t player_y = 40;
@@ -21,6 +24,11 @@ int cell_y = cell_y_init;
 uint32_t level = 1;
 int32_t lives = 3;
 
+const uint32_t init_timer_val  = SECONDS_TO_FRAMES(5);
+
+uint32_t perm_timer = init_timer_val;
+uint32_t frame_timer = 0;
+uint32_t curr_diff_timer = init_timer_val;
 
 sprite_t* block_sprite;
 sprite_t* block_palette;
@@ -35,6 +43,8 @@ sprite_t* playfield_background;
 
 sprite_t* scoreboard;
 surface_t scoreboard_surf;
+
+sprite_t* gameover_sprite;
 
 static xm64player_t xm;
 
@@ -53,6 +63,8 @@ int main()
 
     rdp_init();
     rdpq_debug_start();
+
+    gameover_sprite = sprite_load("rom:/game_over.sprite");
 
     while(1)
     {
@@ -98,6 +110,39 @@ int main()
         {
             render_game();
 
+            if(frame_timer >= curr_diff_timer){
+                switch(f_stage)
+                {
+                    case 0:
+                        flashing_state = true;
+                        for(int i = 5; i >= 1; --i){
+                            for(int x = 1; x < 6-i; ++x){
+                                gamefield[i][x].is_lit = true;
+                            }
+                        }
+                        curr_diff_timer /= 4;
+                        f_stage++;
+                        break;
+                    case 1:
+                        flashing_state = false;
+                        
+                        f_stage++;
+                        break;
+                    case 2:
+                        curr_diff_timer *=4;
+                        for(int i = 5; i >= 0; --i){
+                            for(int x = 0; x < 6-i; ++x){
+                                gamefield[i][x].is_lit = false;
+                            }
+                        }
+                        f_stage = 0;
+                        break;
+                    default:
+                        break;
+                }
+                frame_timer = 0;
+            }
+
             if (audio_can_write()) 
             {    	
                 short *buf = audio_write_begin();
@@ -106,6 +151,12 @@ int main()
             }
 
             if(test_win_condition(level)){
+                curr_diff_timer = perm_timer;
+
+                if (curr_diff_timer > SECONDS_TO_FRAMES(2)) curr_diff_timer -= 30;
+                perm_timer = curr_diff_timer;
+                
+                frame_timer = 0;
                 player_x = 40;
                 player_y = 40;
 
@@ -114,9 +165,76 @@ int main()
 
                 init_gamefield();
 
+                anim_frame = 0;
+
                 level++;
+                if(lives < 4) lives++;
+            }
+            
+            if(!flashing_state && gamefield[cell_x][cell_y].is_lit){
+                curr_diff_timer = perm_timer;
+                frame_timer = 0;
+                player_x = 40;
+                player_y = 40;
+
+                cell_x = 0;
+                cell_y = 0;
+
+                anim_frame = 0;
+                lives--;
+
+                for(int i = 5; i >= 0; --i){
+                    for(int x = 0; x < 6-i; ++x){
+                        gamefield[i][x].is_lit = false;
+                    }
+                }
+
+                f_stage = 0;
+                flashing_state = false;
+            }
+
+            if(lives < 0){
+                int gameovertimer = 0;
+                while(gameovertimer < SECONDS_TO_FRAMES(5)){
+                    surface_t* disp = display_lock();
+                    if(!(disp)) continue;
+
+                    rdp_attach(disp);
+
+                    rdpq_set_mode_copy(true);
+
+                    surface_t go_surf = sprite_get_pixels(gameover_sprite);
+                    rdpq_tex_load_sub(TILE0,&go_surf,0,0,0,128,16);
+                    rdpq_texture_rectangle(TILE0,96,112,96+128,112+16,0,0,1,1);
+
+                    rdp_detach_show(disp);
+                    gameovertimer++;
+                }
+                f_stage = 0;
+                frame_timer = 0;
+                lives = 3;
+
+                player_x = 40;
+                player_y = 40;
+
+                cell_x = 0;
+                cell_y = 0;
+
+                init_gamefield();
+
+                anim_frame = 0;
+
+                level = 1;
+                game_state = STATE_MENU;
             }
         }
+
+        f_stage = 0;
+
+        flashing_state = false;
+
+        curr_diff_timer = init_timer_val;
+        perm_timer = curr_diff_timer;
 
         sprite_free(block_sprite);
         sprite_free(block_palette);

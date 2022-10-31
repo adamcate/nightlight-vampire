@@ -67,32 +67,49 @@ void render_playfield(){
     rdpq_mode_tlut(TLUT_RGBA16);
     rdpq_tex_load_tlut(sprite_get_palette(block_palette), 0, 256);
 
-    if(level < 5){
-        rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, level % 5, 0, 0, 32, 32);
+    if(level < 6){
+        rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, level % 6, 0, 0, 32, 32);
     }else{
-        rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, 5, 0, 0, 32, 32);
+        rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, 6, 0, 0, 32, 32);
     }
     rdpq_texture_rectangle(TILE0,270,15,302,47,0,0,1,1);
 
     for(int i = 0; i < 7; ++i)
     {
 
-        for(int palette = 0; palette < 6; ++palette)
+        for(int palette = 0; palette < 8; ++palette)
         {
             int grid_y = 7 - i - 1;
             int grid_x = 0;
 
             rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, palette, 0, 0, 32, 32);
-            
-            for(int j = 0; j < 7 - i; ++j)
-            {
-                if(gamefield[grid_x][grid_y].col_index == palette && !gamefield[grid_x][grid_y].is_lit)
+            if(palette < 7){
+                for(int j = 0; j < 7 - i; ++j)
                 {
-                    rdpq_texture_rectangle(TILE0,playfield_x + 32*j+16*i,playfield_y-24*i,playfield_x + 32+32*j+16*i,32+playfield_y-24*i,0,0,1,1);
-                }
-                grid_x++;
-                grid_y--;
+                    if(gamefield[grid_x][grid_y].col_index == palette)
+                    {
+                        rdpq_texture_rectangle(TILE0,playfield_x + 32*j+16*i,playfield_y-24*i,playfield_x + 32+32*j+16*i,32+playfield_y-24*i,0,0,1,1);
+                    }
+                    grid_x++;
+                    grid_y--;
 
+                }
+            }else{
+                for(int j = 0; j < 7 - i; ++j)
+                {
+                    if(gamefield[grid_x][grid_y].is_lit && flashing_state)
+                    {
+                        if((frame_timer / 4) % 4 == 0){
+                            rdpq_texture_rectangle(TILE0,playfield_x + 32*j+16*i,playfield_y-24*i,playfield_x + 32+32*j+16*i,32+playfield_y-24*i,0,0,1,1);
+                        }
+                    }
+                    if(gamefield[grid_x][grid_y].is_lit && !flashing_state)
+                    {
+                        rdpq_texture_rectangle(TILE0,playfield_x + 32*j+16*i,playfield_y-24*i,playfield_x + 32+32*j+16*i,32+playfield_y-24*i,0,0,1,1);
+                    }
+                    grid_x++;
+                    grid_y--;
+                }
             }
         }
     }
@@ -106,6 +123,8 @@ void render_game(){
     surface_t* disp = display_lock();
 
     if(!disp) return;
+
+    frame_timer++;
 
     get_controller_inputs(dir_held);
 
