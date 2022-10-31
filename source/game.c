@@ -66,7 +66,11 @@ void get_controller_inputs(bool* outputs)
     if(!getInput) return;
 
     gamefield[cell_x][cell_y].col_index += 1;
-    gamefield[cell_x][cell_y].col_index %= (level + 1);
+    if(level < 5){
+        gamefield[cell_x][cell_y].col_index %= (level + 1);
+    }else {
+        gamefield[cell_x][cell_y].col_index %= 6;
+    }
 
     if(dpad_down.c[0].A){gamefield[cell_x][cell_y].is_lit = true;}
 }

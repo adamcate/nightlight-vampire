@@ -61,12 +61,17 @@ void render_playfield(){
     rdpq_mode_tlut(TLUT_RGBA16);
     rdpq_tex_load_tlut(sprite_get_palette(block_palette), 0, 256);
 
-    rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, 0, 0, 0, 32, 32);
+    if(level < 5){
+        rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, level % 5, 0, 0, 32, 32);
+    }else{
+        rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, 5, 0, 0, 32, 32);
+    }
     rdpq_texture_rectangle(TILE0,270,15,302,47,0,0,1,1);
+
     for(int i = 0; i < 7; ++i)
     {
 
-        for(int palette = 0; palette < 5; ++palette)
+        for(int palette = 0; palette < 6; ++palette)
         {
             int grid_y = 7 - i - 1;
             int grid_x = 0;
