@@ -22,7 +22,7 @@ typedef struct
 {
 
     uint8_t col_index : 4;
-    uint8_t is_lit : 2;
+    bool is_lit : 1;
     bool warning_flash : 1;
     bool is_occupied : 1;
 
@@ -44,6 +44,8 @@ extern int cell_x;
 extern int cell_y;
 
 extern uint32_t level;
+
+extern int32_t lives;
 
 
 extern sprite_t* block_sprite;

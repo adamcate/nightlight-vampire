@@ -18,8 +18,13 @@ void init_gamefield(){
 }
 
 bool test_win_condition(int col_index){
-    int count = 0;
-    count++;
+
+    for(int y = 6; y >= 0; --y){
+        for(int x = 0; x < 7-y; ++x){
+            if(gamefield[x][y].col_index != col_index) return false;
+        }
+    }
+
     return true;
 }
 
@@ -63,6 +68,12 @@ void get_controller_inputs(bool* outputs)
             break;
         }
     }
+    
+    if(dpad_down.c[0].A){
+        //gamefield[cell_x][cell_y].is_lit = true;
+        lives--;
+    }
+
     if(!getInput) return;
 
     gamefield[cell_x][cell_y].col_index += 1;
@@ -72,5 +83,4 @@ void get_controller_inputs(bool* outputs)
         gamefield[cell_x][cell_y].col_index %= 6;
     }
 
-    if(dpad_down.c[0].A){gamefield[cell_x][cell_y].is_lit = true;}
 }

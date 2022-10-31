@@ -27,8 +27,13 @@ void render_player(){
     rdpq_mode_antialias(false);
 
     rdpq_tex_load_tlut(sprite_get_palette(player_sprite),0,16);
+
     rdpq_tex_load_sub_ci4(TILE0,&player_surf,0,0,anim_frame*32,0,32+anim_frame*32,32);
     rdpq_texture_rectangle(TILE0,player_x,player_y,player_x+32,player_y+32,anim_frame*32,0,1,1);
+
+    rdpq_tex_load_sub_ci4(TILE0,&player_surf,0,0,0,0,32,32);
+
+    for(int i = 0; i < lives; ++i) rdpq_texture_rectangle(TILE0,280,208 - i*32,280+26,208 - i*32 + 26,0,0,1.2,1.2);
 
     rdpq_mode_tlut(TLUT_NONE);
 }
@@ -52,6 +57,7 @@ void render_background(){
 
 
 void render_playfield(){
+
     rdpq_set_mode_copy(true);
     rdpq_mode_antialias(false);
 
@@ -80,7 +86,7 @@ void render_playfield(){
             
             for(int j = 0; j < 7 - i; ++j)
             {
-                if(gamefield[grid_x][grid_y].col_index == palette)
+                if(gamefield[grid_x][grid_y].col_index == palette && !gamefield[grid_x][grid_y].is_lit)
                 {
                     rdpq_texture_rectangle(TILE0,playfield_x + 32*j+16*i,playfield_y-24*i,playfield_x + 32+32*j+16*i,32+playfield_y-24*i,0,0,1,1);
                 }

@@ -19,6 +19,7 @@ int cell_x = cell_x_init;
 int cell_y = cell_y_init;
 
 uint32_t level = 1;
+int32_t lives = 3;
 
 
 sprite_t* block_sprite;
@@ -104,6 +105,17 @@ int main()
                 audio_write_end();
             }
 
+            if(test_win_condition(level)){
+                player_x = 40;
+                player_y = 40;
+
+                cell_x = 0;
+                cell_y = 0;
+
+                init_gamefield();
+
+                level++;
+            }
         }
 
         sprite_free(block_sprite);
