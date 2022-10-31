@@ -18,7 +18,7 @@ const int cell_y_init = 0;
 int cell_x = cell_x_init;
 int cell_y = cell_y_init;
 
-uint32_t score = 20;
+uint32_t level = 1;
 
 
 sprite_t* block_sprite;
@@ -57,13 +57,13 @@ int main()
     {
 
         playfield_background = sprite_load("rom:/TITLE.sprite");
-
+        
         while(game_state == STATE_MENU){
             controller_scan();
             struct controller_data control = get_keys_down();
 
             if(control.c[0].start) game_state = STATE_GAME;
-            
+
             surface_t* disp = display_lock();
             if(!disp) continue;
 
@@ -73,7 +73,7 @@ int main()
             
             rdp_detach_show(disp);
         }
-
+        
         sprite_free(playfield_background);
 
         block_sprite = sprite_load("rom:/block.sprite");
@@ -89,6 +89,7 @@ int main()
         xm64player_open(&xm, "rom:/3_OldLonely.xm64");
         xm64player_play(&xm, 0);
 
+        
         init_gamefield();
         
         playfield_background = sprite_load("rom:/playfield_background.sprite");
@@ -96,16 +97,20 @@ int main()
         {
             render_game();
 
-            if (audio_can_write()) {    	
-            short *buf = audio_write_begin();
-            mixer_poll(buf, audio_get_buffer_length());
-            audio_write_end();
-        }
+            if (audio_can_write()) 
+            {    	
+                short *buf = audio_write_begin();
+                mixer_poll(buf, audio_get_buffer_length());
+                audio_write_end();
+            }
+
         }
 
         sprite_free(block_sprite);
         sprite_free(block_palette);
         sprite_free(player_sprite);
+
+        xm64player_close(&xm);
     }
     return 0;
 }

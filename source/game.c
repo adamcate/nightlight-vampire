@@ -17,6 +17,12 @@ void init_gamefield(){
     }
 }
 
+bool test_win_condition(int col_index){
+    int count = 0;
+    count++;
+    return true;
+}
+
 void get_controller_inputs(bool* outputs)
 {
     controller_scan();
@@ -60,7 +66,7 @@ void get_controller_inputs(bool* outputs)
     if(!getInput) return;
 
     gamefield[cell_x][cell_y].col_index += 1;
-    gamefield[cell_x][cell_y].col_index %= 5;
+    gamefield[cell_x][cell_y].col_index %= (level + 1);
 
     if(dpad_down.c[0].A){gamefield[cell_x][cell_y].is_lit = true;}
 }

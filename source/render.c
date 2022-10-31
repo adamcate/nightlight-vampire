@@ -24,6 +24,7 @@ static volatile color_t bk_color = {
 void render_player(){
     rdpq_set_mode_copy(true);
     rdpq_mode_tlut(TLUT_RGBA16);
+    rdpq_mode_antialias(false);
 
     rdpq_tex_load_tlut(sprite_get_palette(player_sprite),0,16);
     rdpq_tex_load_sub_ci4(TILE0,&player_surf,0,0,anim_frame*32,0,32+anim_frame*32,32);
@@ -39,16 +40,14 @@ void render_background(){
     rdpq_set_mode_copy(true);
     //rdpq_set_mode_standard();
     rdpq_mode_tlut(TLUT_NONE);
-    
+    rdpq_mode_antialias(false);
+
     for(int x = 0; x <= 280; x+=40){
         for(int y = 0; y <= 200; y+=40){
             rdpq_tex_load_sub(TILE0, &bk_surf, 0, x, y, x+40,y+40);
             rdpq_texture_rectangle(TILE0,x,y,x+40,y+40,x,y,1,1);
         }
     }
-
-    // rdpq_tex_load_sub(TILE0,&scoreboard_surf,0,0,0,64,64);
-    // rdpq_texture_rectangle(TILE0,0,0,64,64,0,0,1,1);
 }
 
 
@@ -56,11 +55,14 @@ void render_playfield(){
     rdpq_set_mode_copy(true);
     rdpq_mode_antialias(false);
 
+    rdpq_tex_load_sub(TILE0,&scoreboard_surf,0,0,0,64,32);
+    rdpq_texture_rectangle(TILE0,200,15,200+64,15+32,0,0,1,1);
+
     rdpq_mode_tlut(TLUT_RGBA16);
     rdpq_tex_load_tlut(sprite_get_palette(block_palette), 0, 256);
 
-    rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, palette_counter, 0, 0, 32, 32);
-
+    rdpq_tex_load_sub_ci4(TILE0,&block_surf, 0, 0, 0, 0, 32, 32);
+    rdpq_texture_rectangle(TILE0,270,15,302,47,0,0,1,1);
     for(int i = 0; i < 7; ++i)
     {
 

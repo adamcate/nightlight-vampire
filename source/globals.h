@@ -43,7 +43,7 @@ extern uint32_t player_y;
 extern int cell_x;
 extern int cell_y;
 
-extern uint32_t score;
+extern uint32_t level;
 
 
 extern sprite_t* block_sprite;

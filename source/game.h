@@ -5,5 +5,6 @@
 
 void get_controller_inputs(bool* outputs);
 void init_gamefield();
+bool test_win_condition(int col_index);
 
 #endif
